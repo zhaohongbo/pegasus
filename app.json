@@ -1,0 +1,5 @@
+{
+  "name": "Pegasus",
+  "description": "backend for personal website.",
+  "addons": [ "heroku-postgresql" ]
+}
