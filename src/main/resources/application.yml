@@ -2,7 +2,6 @@ spring:
   datasource:
     url: ${JDBC_DATABASE_URL:}
     hikari:
-      connection-timeout: 3000
       maximum-pool-size: 10
   profiles:
     active: production

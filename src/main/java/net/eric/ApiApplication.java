@@ -18,10 +18,17 @@ package net.eric;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import net.eric.aspect.AuthInterceptor;
+import net.eric.service.JwtService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import javax.sql.DataSource;
 
@@ -30,13 +37,19 @@ import javax.sql.DataSource;
  * @date 2018/2/4
  */
 @SpringBootApplication
-public class ApiApplication {
-
+@EnableAspectJAutoProxy(proxyTargetClass = true)
+public class ApiApplication extends WebMvcConfigurerAdapter {
     @Value("${spring.datasource.url}")
     private String dbUrl;
 
     public static void main(String[] args) throws Exception {
         SpringApplication.run(ApiApplication.class, args);
+    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        HandlerInterceptor basicInterceptor = new AuthInterceptor(createJwtService());
+        registry.addInterceptor(basicInterceptor).addPathPatterns("/**").excludePathPatterns("/login");
     }
 
     @Bean
@@ -46,4 +59,15 @@ public class ApiApplication {
         return new HikariDataSource(config);
     }
 
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOrigins("https://zhaohongbo.github.io", "http://localhost")
+                .allowedMethods("GET", "POST");
+    }
+
+    @Bean
+    public JwtService createJwtService() {
+        return new JwtService();
+    }
 }
