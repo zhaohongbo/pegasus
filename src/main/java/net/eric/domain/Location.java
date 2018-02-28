@@ -4,7 +4,7 @@ import java.util.Date;
 
 /**
  * @author Eric Zhao
- * @date 2018/2/13
+ * @date 2018/2/14
  */
 public class Location {
     private int id;
