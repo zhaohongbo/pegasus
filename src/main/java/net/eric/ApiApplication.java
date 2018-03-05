@@ -42,7 +42,7 @@ public class ApiApplication extends WebMvcConfigurerAdapter {
     @Value("${spring.datasource.url}")
     private String dbUrl;
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         SpringApplication.run(ApiApplication.class, args);
     }
 
@@ -62,12 +62,12 @@ public class ApiApplication extends WebMvcConfigurerAdapter {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("https://zhaohongbo.github.io", "http://localhost")
+                .allowedOrigins("https://zhaohongbo.github.io", "http://localhost:3000")
                 .allowedMethods("GET", "POST");
     }
 
     @Bean
-    public JwtService createJwtService() {
+    private JwtService createJwtService() {
         return new JwtService();
     }
 }
