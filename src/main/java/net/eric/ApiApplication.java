@@ -67,7 +67,7 @@ public class ApiApplication extends WebMvcConfigurerAdapter {
     }
 
     @Bean
-    private JwtService createJwtService() {
+    public JwtService createJwtService() {
         return new JwtService();
     }
 }
