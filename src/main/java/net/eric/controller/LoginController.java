@@ -12,10 +12,7 @@ import net.eric.service.JwtService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author Eric Zhao
@@ -34,7 +31,7 @@ public class LoginController {
     private JwtService jwtService;
 
     @RequestMapping(path = "/login", method = RequestMethod.POST)
-    public LoginResponse login(LoginRequest request) throws LoginException {
+    public LoginResponse login(@RequestBody LoginRequest request) throws LoginException {
         User user = userMapper.getUser(request.getUsername());
         if (user == null) {
             logger.warn("invalid user name {}", request.getUsername());
