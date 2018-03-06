@@ -6,12 +6,16 @@ import net.eric.domain.UserInfo;
 import net.eric.exception.LoginException;
 import net.eric.mapper.UserInfoMapper;
 import net.eric.mapper.UserMapper;
+import net.eric.protocol.LoginRequest;
 import net.eric.protocol.LoginResponse;
 import net.eric.service.JwtService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author Eric Zhao
@@ -30,15 +34,14 @@ public class LoginController {
     private JwtService jwtService;
 
     @RequestMapping(path = "/login", method = RequestMethod.POST)
-    public LoginResponse login(@RequestParam("username") String username,
-                               @RequestParam("password") String password) throws LoginException {
-        User user = userMapper.getUser(username);
+    public LoginResponse login(LoginRequest request) throws LoginException {
+        User user = userMapper.getUser(request.getUsername());
         if (user == null) {
-            logger.warn("invalid user name {}", username);
+            logger.warn("invalid user name {}", request.getUsername());
             throw new LoginException();
         }
-        if (!password.equals(user.getPassword())) {
-            logger.warn("invalid password {}", password);
+        if (!request.getPassword().equals(user.getPassword())) {
+            logger.warn("invalid password {}", request.getPassword());
             throw new LoginException();
         }
         String token = jwtService.genToken(user.getId());
