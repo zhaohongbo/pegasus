@@ -2,6 +2,7 @@ package net.eric.aspect;
 
 import net.eric.exception.AuthException;
 import net.eric.exception.LoginException;
+import net.eric.protocol.ErrorMessage;
 import net.eric.protocol.ErrorResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,22 +22,22 @@ public class BasicControllerAdvice {
     @ExceptionHandler(LoginException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public ErrorResponse handleLogicException(LoginException loginException) {
-        logger.error(loginException.getMessage(), loginException);
+        logger.error("error {}", loginException.getMessage());
         return new ErrorResponse(loginException.getMessage());
     }
 
     @ExceptionHandler(AuthException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public ErrorResponse handleAuthException(AuthException authException) {
-        logger.error(authException.getMessage(), authException);
+        logger.error("error {}", authException.getMessage());
         return new ErrorResponse(authException.getMessage());
     }
 
     @ExceptionHandler(Throwable.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorResponse handleOtherException(Throwable th) {
-        logger.error("error {}", th);
-        return new ErrorResponse("内部服务器错误");
+        logger.error("error {}", th.getMessage());
+        return new ErrorResponse(ErrorMessage.SYSTEM_EXCEPTION.getError());
     }
 
 }
