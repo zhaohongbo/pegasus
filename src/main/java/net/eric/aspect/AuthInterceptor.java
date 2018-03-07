@@ -35,6 +35,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String token = request.getHeader(AUTHENTICATION);
         try {
+            logger.info("received request {}", request);
             int userId = jwtService.getUserIdFromToken(token);
             request.setAttribute(AUTH_USER_ID, userId);
             return true;
