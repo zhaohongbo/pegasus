@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/processdef">
+    <process id="leave" name="请假" isExecutable="true">
+        <documentation>请假工作流</documentation>
+        <startEvent id="startevent" name="Start">
+            <extensionElements>
+                <activiti:formProperty id="startdate" name="请假开始时间" type="date" datePattern="yyyy-MM-dd" required="true"></activiti:formProperty>
+                <activiti:formProperty id="enddate" name="请假结束时间" type="date" datePattern="yyyy-MM-dd" required="true"></activiti:formProperty>
+                <activiti:formProperty id="reason" name="请假理由" type="string" required="true"></activiti:formProperty>
+            </extensionElements>
+        </startEvent>
+        <userTask id="permit" name="审批" activiti:assignee="test">
+            <extensionElements>
+                <activiti:formProperty id="result" name="审批结果" type="boolean" required="true"></activiti:formProperty>
+                <activiti:formProperty id="startdate" name="请假开始时间" type="date" datePattern="yyyy-MM-dd" writable="false"></activiti:formProperty>
+                <activiti:formProperty id="enddate" name="请假结束时间" type="date" datePattern="yyyy-MM-dd" writable="false"></activiti:formProperty>
+                <activiti:formProperty id="reason" name="请假理由" type="string" writable="false"></activiti:formProperty>
+            </extensionElements>
+        </userTask>
+        <sequenceFlow id="sid-47038D13-0311-4CBE-A0FD-E256D94306C2" sourceRef="startevent" targetRef="permit"></sequenceFlow>
+        <endEvent id="endevent" name="End"></endEvent>
+        <sequenceFlow id="sid-E2C4D411-E9AF-4620-9D5F-578C07CA79F4" sourceRef="permit" targetRef="endevent"></sequenceFlow>
+    </process>
+    <bpmndi:BPMNDiagram id="BPMNDiagram_leave">
+        <bpmndi:BPMNPlane bpmnElement="leave" id="BPMNPlane_leave">
+            <bpmndi:BPMNShape bpmnElement="startevent" id="BPMNShape_startevent">
+                <omgdc:Bounds height="30.0" width="30.0" x="100.0" y="151.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="permit" id="BPMNShape_permit">
+                <omgdc:Bounds height="80.0" width="100.0" x="209.0" y="126.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="endevent" id="BPMNShape_endevent">
+                <omgdc:Bounds height="28.0" width="28.0" x="390.0" y="152.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNEdge bpmnElement="sid-47038D13-0311-4CBE-A0FD-E256D94306C2" id="BPMNEdge_sid-47038D13-0311-4CBE-A0FD-E256D94306C2">
+                <omgdi:waypoint x="130.0" y="166.0"></omgdi:waypoint>
+                <omgdi:waypoint x="209.0" y="166.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sid-E2C4D411-E9AF-4620-9D5F-578C07CA79F4" id="BPMNEdge_sid-E2C4D411-E9AF-4620-9D5F-578C07CA79F4">
+                <omgdi:waypoint x="309.0" y="166.0"></omgdi:waypoint>
+                <omgdi:waypoint x="390.0" y="166.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+        </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</definitions>
