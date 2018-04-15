@@ -24,7 +24,7 @@ public class WorkflowController {
 
     @Autowired
     public WorkflowController(BpmnService bpmnService) {
-        this.bpmnService = bpmnService
+        this.bpmnService = bpmnService;
     }
 
     @RequestMapping(path = "/definition/list", method = RequestMethod.GET)
