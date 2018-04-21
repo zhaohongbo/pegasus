@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class WorkflowDefinitionListResponse {
     private List<WorkflowDefinition> workflowDefinitionList;
-    private WorkflowProperty firstWorkflowFormProperty;
+    private WorkflowPropertyResponse firstWorkflowFormProperty;
 
     public void addWorkflowDefinition(String id, String name) {
         if (null == workflowDefinitionList) {
@@ -21,14 +21,14 @@ public class WorkflowDefinitionListResponse {
     }
 
     public void setFirstWorkflowDefinition(String id, List<FormProperty> formProperties) {
-        this.firstWorkflowFormProperty = new WorkflowProperty(id, formProperties);
+        this.firstWorkflowFormProperty = new WorkflowPropertyResponse(id, formProperties);
     }
 
     public List<WorkflowDefinition> getWorkflowDefinitionList() {
         return workflowDefinitionList;
     }
 
-    public WorkflowProperty getFirstWorkflowFormProperty() {
+    public WorkflowPropertyResponse getFirstWorkflowFormProperty() {
         return firstWorkflowFormProperty;
     }
 
@@ -47,24 +47,6 @@ public class WorkflowDefinitionListResponse {
 
         public String getName() {
             return name;
-        }
-    }
-
-    public static class WorkflowProperty {
-        private String id;
-        private List<FormProperty> formProperties;
-
-        WorkflowProperty(String id, List<FormProperty> formProperties) {
-            this.id = id;
-            this.formProperties = formProperties;
-        }
-
-        public String getId() {
-            return id;
-        }
-
-        public List<FormProperty> getFormProperties() {
-            return formProperties;
         }
     }
 }

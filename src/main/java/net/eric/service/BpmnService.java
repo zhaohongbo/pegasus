@@ -43,6 +43,10 @@ public class BpmnService {
         return repositoryService.createProcessDefinitionQuery().list();
     }
 
+    public ProcessDefinition queryProcessDefinition(String processDefinitionId) {
+        return repositoryService.createProcessDefinitionQuery().processDefinitionId(processDefinitionId).singleResult();
+    }
+
     public List<FormProperty> queryStartFormData(String processDefinitionId) throws ActivitiObjectNotFoundException {
         StartFormData formData = formService.getStartFormData(processDefinitionId);
         return formData.getFormProperties();
